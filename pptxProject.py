@@ -1,5 +1,7 @@
+import os
 import time
 
+from flask import json
 from pptx import Presentation
 import openai
 
@@ -69,18 +71,57 @@ def get_ans_from_AI(msg):
     return assistant_reply
 
 
-def main():
-    res = []
-    data_list = extract_text_from_slides(r'C:\Users\omer\Excellenteam\pptxPro\Honeypot.pptx')
-    for text in data_list:
-        request = craete_request(text)
-        answer = get_ans_from_AI(request)
-        print(text)
-        print(answer)
-        time.sleep(20)
-        res.append(text)
-    import_to_file(res)
+def process_files():
+    uploads_folder = os.path.join(os.getcwd(), 'uploads')
+    outputs_folder = os.path.join(os.getcwd(), 'outputs')
+
+    while True:
+        time.sleep(10)  # Sleep for 10 seconds between iterations
+
+        # Scan the uploads folder and identify files that haven't been processed
+        for filename in os.listdir(uploads_folder):
+            file_path = os.path.join(uploads_folder, filename)
+            if os.path.isfile(file_path) and filename not in os.listdir(outputs_folder):
+                print(f"Processing file: {filename}")
+
+                # Process the file using existing code
+                data_list = extract_text_from_slides(file_path)
+                result = []
+                for text in data_list:
+                    request = create_request(text)
+                    answer = get_ans_from_AI(request)
+                    print(text)
+                    print(answer)
+                    result.append({'text': text, 'answer': answer})
+
+                # Save the explanation JSON in the outputs folder
+                output_filename = os.path.splitext(filename)[0] + '.json'
+                output_path = os.path.join(outputs_folder, output_filename)
+                with open(output_path, 'w') as output_file:
+                    json.dump(result, output_file)
+
+                print(f"Explanation JSON saved: {output_filename}")
+                os.remove(file_path)  # Remove the processed file from the uploads folder
+
+            else:
+                print(f"Skipping file: {filename} (already processed)")
 
 
 if __name__ == "__main__":
-    main()
+    process_files()
+
+# def main():
+#     res = []
+#     data_list = extract_text_from_slides(r'C:\Users\omer\Excellenteam\pptxPro\Honeypot.pptx')
+#     for text in data_list:
+#         request = craete_request(text)
+#         answer = get_ans_from_AI(request)
+#         print(text)
+#         print(answer)
+#         time.sleep(20)
+#         res.append(text)
+#     import_to_file(res)
+#
+#
+# if __name__ == "__main__":
+#     main()
