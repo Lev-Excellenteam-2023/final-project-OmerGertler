@@ -12,12 +12,14 @@ REQ = "Please provide an English summary and brief explanation of the text on th
       "along with a recommended website for further learning. " \
       "If the slide does not contain any text, please do not provide an answer. " \
       "Please format your response as an educational paragraph.\n"
-KEY = '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'
+# KEY = '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'
+KEY = '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'
 
 messages = []
 messages.append({"role": "system", "content": f"you are a helpful AI that is explaining a PowerPoint presentation."})
 openai.api_key = KEY
 
+# http://127.0.0.1:5000/status/a2a90ddf-7c4e-4ce7-924b-7cd6ca9d38d1
 
 def import_to_file(text_list):
     """

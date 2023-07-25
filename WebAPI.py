@@ -84,56 +84,5 @@ def check_status(uid):
         abort(404)
 
 
-
-# @app.route('/status/<uid>', methods=['GET'])
-# def check_status(uid):
-#     folder_path = os.path.join(os.getcwd(), 'outputs')
-#     matched_uids = [
-#         filename for filename in os.listdir(folder_path)
-#         if uid in filename and uid in filename.split('_', 1)[0]
-#     ]
-#
-#     if matched_uids:
-#         matched_filename = matched_uids[0]
-#
-#         # Read the file content from the file
-#         file_path = os.path.join(folder_path, matched_filename)
-#         with open(file_path, 'r') as f:
-#             file_content = f.read()
-#
-#         formatted_content = format_file_content(file_content)
-#         response = {
-#             'explanation': formatted_content,
-#         }
-#     else:
-#         abort(404)
-#
-#     return render_template('status.html', response=response)
-
-
-# @app.route('/status/<uid>', methods=['GET'])
-# def check_status(uid):
-#     folder_path = os.path.join(os.getcwd(), 'outputs')
-#     matched_uids = [
-#         filename for filename in os.listdir(folder_path)
-#         if uid in filename and uid in filename.split('_', 1)[0]
-#     ]
-#
-#     if matched_uids:
-#         matched_filename = matched_uids[0]
-#
-#         # Read the file content from the file
-#         file_path = os.path.join(folder_path, matched_filename)
-#         with open(file_path, 'r') as f:
-#             file_content = f.read()
-#
-#         # Format the file content for readability
-#         formatted_content = format_file_content(file_content)
-#
-#         return render_template('status.html', formatted_content=formatted_content)
-#     else:
-#         abort(404)  # Return a 404 NOT FOUND response if the UID is not found
-
-
 if __name__ == '__main__':
     app.run()
