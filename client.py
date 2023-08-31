@@ -78,6 +78,5 @@ def main():
         print(f"Error retrieving status: {str(e)}")
 
 
-# Example usage
 if __name__ == '__main__':
     main()
